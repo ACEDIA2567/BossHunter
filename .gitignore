@@ -74,3 +74,6 @@ crashlytics-build.properties
 # Unity Asset Store
 /[Aa]ssets/Hero Knight - Pixel Art
 /[Aa]ssets/Hero Knight - Pixel Art.meta
+
+/[Aa]ssets/Enemy/Minotaur - Sprite Sheet.png
+/[Aa]ssets/Enemy/Minotaur - Sprite Sheet.png.meta
