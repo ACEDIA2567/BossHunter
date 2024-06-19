@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Minotaur : Monster
@@ -11,9 +14,12 @@ public class Minotaur : Monster
     private float coolDown;
     GameObject player;
     private bool isMoving = true;
+    private bool isAttacking = false;
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+
+    [SerializeField] private GameObject earthObject;
 
 
     private void Start()
@@ -31,19 +37,18 @@ public class Minotaur : Monster
     private void Update()
     {
         Search();
-        SpriteFlip();
         coolDown += Time.deltaTime;
-        if (player != null && coolDown >= attackCoolDown)
+        if (player != null && coolDown >= attackCoolDown && !isAttacking)
         {
             coolDown = 0;
-            
+            DoAction();
         }
     }
 
     public override void DoAction()
     {
         base.DoAction();
-        Search();
+        EarthCrashReady();
     }
 
     private void SpriteFlip()
@@ -61,7 +66,8 @@ public class Minotaur : Monster
     private void Search()
     {
         isMoving = true;
-        if(isMoving && player != gameObject)
+        SpriteFlip();
+        if (isMoving && player != gameObject)
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
             if(distance > 8.0f)
@@ -86,6 +92,60 @@ public class Minotaur : Monster
         {
             Debug.Log("8 юлго");
         }
+    }
+
+    private void EarthCrashReady()
+    {
+        isAttacking = true;
+        animator.SetBool("isEarthCrashReady", true);
+    }
+
+    private void EarthCrash()
+    {
+        animator.SetBool("isEarthCrashReady", false);
+        animator.SetBool("isEarthCrash", true);
+        //Vector3 earthPosition = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
+        //Vector3 forwardEarthPosition = earthPosition;
+        //Vector3 backEarthPosition = earthPosition;
+        //Vector3 addPosition = new Vector3(2.5f, 0, 0);
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    forwardEarthPosition += addPosition;
+        //    backEarthPosition -= addPosition;
+        //    GameObject fo = Instantiate(earthObject, transform);
+        //    fo.transform.position = forwardEarthPosition;
+        //    GameObject bo = Instantiate(earthObject, transform);
+        //    bo.transform.position = backEarthPosition;
+        //    Task.Delay(300);
+        //}
+        StartCoroutine(EarthObjectCoroutine());
+    }
+
+    private IEnumerator EarthObjectCoroutine()
+    {
+        Vector3 earthPosition = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
+        Vector3 forwardEarthPosition = earthPosition;
+        Vector3 backEarthPosition = earthPosition;
+        Vector3 addPosition = new Vector3(2.5f, 0, 0);
+        for (int i = 0; i < 5; i++)
+        {
+            forwardEarthPosition += addPosition;
+            backEarthPosition -= addPosition;
+            GameObject fo = Instantiate(earthObject, transform);
+            fo.transform.position = forwardEarthPosition;
+            GameObject bo = Instantiate(earthObject, transform);
+            bo.transform.position = backEarthPosition;
+
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    private void EarthCrashEnd()
+    {
+        
+        isAttacking = false;
+        Debug.Log(isAttacking);
+        animator.SetBool("isEarthCrash", false);
     }
 }
 
