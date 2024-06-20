@@ -47,8 +47,16 @@ public class Minotaur : Monster
 
     public override void DoAction()
     {
+        int randint = 0;//Random.Range(0, 2);
         base.DoAction();
-        EarthCrashReady();
+        if (randint == 0)
+        {
+            WindMillReady();
+        }
+        else
+        {
+            EarthCrashReady();
+        }
     }
 
     private void SpriteFlip()
@@ -94,6 +102,7 @@ public class Minotaur : Monster
         }
     }
 
+    // EarthCrash
     private void EarthCrashReady()
     {
         isAttacking = true;
@@ -104,20 +113,6 @@ public class Minotaur : Monster
     {
         animator.SetBool("isEarthCrashReady", false);
         animator.SetBool("isEarthCrash", true);
-        //Vector3 earthPosition = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
-        //Vector3 forwardEarthPosition = earthPosition;
-        //Vector3 backEarthPosition = earthPosition;
-        //Vector3 addPosition = new Vector3(2.5f, 0, 0);
-        //for (int i = 0; i < 5; i++)
-        //{
-        //    forwardEarthPosition += addPosition;
-        //    backEarthPosition -= addPosition;
-        //    GameObject fo = Instantiate(earthObject, transform);
-        //    fo.transform.position = forwardEarthPosition;
-        //    GameObject bo = Instantiate(earthObject, transform);
-        //    bo.transform.position = backEarthPosition;
-        //    Task.Delay(300);
-        //}
         StartCoroutine(EarthObjectCoroutine());
     }
 
@@ -142,10 +137,34 @@ public class Minotaur : Monster
 
     private void EarthCrashEnd()
     {
-        
         isAttacking = false;
-        Debug.Log(isAttacking);
         animator.SetBool("isEarthCrash", false);
+    }
+
+    //WindMill
+    private void WindMillReady()
+    {
+        isAttacking = true;
+        animator.SetBool("isWindMillReady", true);
+    }
+
+    private void WindMill()
+    {
+        animator.SetBool("isWindMillReady", false);
+        animator.SetBool("isWindMill", true);
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance < 4)
+        {
+            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+            Vector2 knockbackForce = new Vector2(10f, 5f);
+            rb.AddForce(knockbackForce, ForceMode2D.Impulse);
+        }
+    }
+
+    private void WindMillEnd()
+    {
+        isAttacking = false;
+        animator.SetBool("isWindMill", false);
     }
 }
 

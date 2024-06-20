@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 1130024046}
   - component: {fileID: 1130024049}
   - component: {fileID: 1130024048}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -340,7 +340,7 @@ Transform:
   m_GameObject: {fileID: 1130024044}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.6, y: -2.76, z: 0}
+  m_LocalPosition: {x: 5.23, y: -2.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -372,7 +372,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &1130024049
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 1248232955}
   - component: {fileID: 1248232954}
   - component: {fileID: 1248232953}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 1934864824}
   - component: {fileID: 1934864823}
   - component: {fileID: 1934864828}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Minotaur
   m_TagString: Boss
   m_Icon: {fileID: 0}
@@ -585,7 +585,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1934864824
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -713,7 +713,7 @@ Transform:
   m_GameObject: {fileID: 1934864822}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.65, y: -3.96, z: 0}
+  m_LocalPosition: {x: -0.28, y: -3.96, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

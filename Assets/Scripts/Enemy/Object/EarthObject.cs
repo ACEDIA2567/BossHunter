@@ -5,7 +5,7 @@ using UnityEngine;
 public class EarthObject : MonoBehaviour
 {
     private float airborneForce = 5f;
-    private float targetTime = 1f;
+    private float targetTime = 0.3f;
     private float curTime;
 
     // Update is called once per frame
