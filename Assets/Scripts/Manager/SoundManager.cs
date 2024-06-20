@@ -67,29 +67,17 @@ public class SoundManager : Singleton<SoundManager>
         mixer.SetFloat("SFX", Mathf.Log10(sliderValue) * 20);
     }
 
-    public void PlaySound(string name)
+    public void PlaySound(AudioClip clip)
     {
-        for (int i = 0; i < clipBGM.Length; i++)
-        {
-            if (name == clipBGM[i].name)
-            {
-                sourceBGM.Stop();
-                sourceBGM.clip = clipBGM[i];
-                sourceBGM.Play();
-            }
-        }
+        sourceBGM.Stop();
+        sourceBGM.clip = clip;
+        sourceBGM.Play();
     }
 
 
 
-    public void PlayShot(string name)
+    public void PlayShot(AudioClip clip)
     {
-        for (int i = 0; i < clipSFX.Length; i++)
-        {
-            if (name == clipSFX[i].name)
-            {
-                sourceSFX.PlayOneShot(clipSFX[i]);
-            }
-        }
+        sourceSFX.PlayOneShot(clip);
     }
 }
