@@ -47,15 +47,23 @@ public class Minotaur : Monster
 
     public override void DoAction()
     {
-        int randint = 0;//Random.Range(0, 2);
+        int randint = Random.Range(0, 3);
         base.DoAction();
         if (randint == 0)
         {
             WindMillReady();
         }
-        else
+        else if (randint == 1)
         {
             EarthCrashReady();
+        }
+        else if(randint == 2)
+        {
+            Slash();
+        }
+        else
+        {
+            Debug.Log("¹º°¡ Àß¸øµÊ");
         }
     }
 
@@ -156,7 +164,15 @@ public class Minotaur : Monster
         if (distance < 4)
         {
             Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-            Vector2 knockbackForce = new Vector2(10f, 5f);
+            Vector2 knockbackForce;
+            if (spriteRenderer.flipX)
+            {
+                knockbackForce = new Vector2(-10f, 5f);
+            }
+            else
+            {
+                knockbackForce = new Vector2(10f, 5f);
+            }
             rb.AddForce(knockbackForce, ForceMode2D.Impulse);
         }
     }
@@ -165,6 +181,25 @@ public class Minotaur : Monster
     {
         isAttacking = false;
         animator.SetBool("isWindMill", false);
+    }
+
+    // Slash
+    private void Slash()
+    {
+        isAttacking = true;
+        animator.SetBool("isSlash", true);
+        // TODO: ÇÇ°Ý ±â´É
+    }
+
+    private void SlashMove()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, (speed));
+    }
+
+    private void SlashEnd()
+    {
+        isAttacking = false;
+        animator.SetBool("isSlash", false);
     }
 }
 
