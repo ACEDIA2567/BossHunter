@@ -11,13 +11,14 @@ public class SoundManager : Singleton<SoundManager>
 
     public AudioClip[] clipSFX;
     public AudioClip[] clipBGM;
-    public AudioSource sourceMaster;
+    private AudioSource sourceMaster;
     private AudioSource sourceSFX;
     private AudioSource sourceBGM;
 
     private void Awake()
     {
         AudioInit();
+        sourceMaster = GetComponent<AudioSource>();
     }
 
     private void AudioInit()
@@ -35,19 +36,25 @@ public class SoundManager : Singleton<SoundManager>
         mixer.SetFloat("MusicVol" ,Mathf.Log10(sliderValue) * 20);
     }
 
-    public void MasterVolumMut(Toggle toggle)
+    public void MasterVolumMute(Toggle toggle)
     {
-        sourceMaster.mute = toggle;
+        sourceMaster.mute = toggle.isOn;
+        foreach (AudioSource source in transform.GetComponentsInChildren<AudioSource>())
+        {
+            source.mute = toggle.isOn;
+        }
     }
 
-    public void BGMVolumMut(Toggle toggle)
+    public void BGMVolumMute(Toggle toggle)
     {
-        sourceSFX.mute = toggle;
+        if (sourceMaster.mute) return;
+        sourceBGM.mute = toggle.isOn;
     }
 
-    public void SFXVolumMut(Toggle toggle)
+    public void SFXVolumMute(Toggle toggle)
     {
-        sourceBGM.mute = toggle;
+        if (sourceMaster.mute) return;
+        sourceSFX.mute = toggle.isOn;
     }
 
     public void SetBGMVolume(float sliderValue)
