@@ -22,6 +22,11 @@ public class Player : MonoBehaviour
     private Vector3 weaponHitBoxRightPos;
     private Vector3 weaponHitBoxLeftPos;
 
+    private GameObject blockHitBox;
+    private BoxCollider2D blockHitBoxCollider;
+    private Vector3 blockHitBoxRightPos;
+    private Vector3 blockHitBoxLeftPos;
+
     private bool m_isWallSliding = false;
     private bool m_grounded = false;
     private bool m_rolling = false;
@@ -52,6 +57,12 @@ public class Player : MonoBehaviour
         weaponHitBoxCollider.enabled = false;
         weaponHitBoxRightPos = weaponHitBox.transform.localPosition;
         weaponHitBoxLeftPos = new Vector3(-weaponHitBoxRightPos.x, weaponHitBoxRightPos.y, weaponHitBoxRightPos.z);
+
+        blockHitBox = GameObject.Find("BlockHitBox");
+        blockHitBoxCollider = blockHitBox.GetComponent<BoxCollider2D>();
+        blockHitBoxCollider.enabled = false;
+        blockHitBoxRightPos = blockHitBox.transform.localPosition;
+        blockHitBoxLeftPos = new Vector3(-blockHitBoxRightPos.x, blockHitBoxRightPos.y, blockHitBoxRightPos.z);
 
         optionUI.SetActive(false);
     }
@@ -135,6 +146,7 @@ public class Player : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = false;
             m_facingDirection = 1;
             weaponHitBox.transform.localPosition = weaponHitBoxRightPos;
+            blockHitBox.transform.localPosition = blockHitBoxRightPos;
         }
 
         else if (inputX < 0)
@@ -142,6 +154,7 @@ public class Player : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = true;
             m_facingDirection = -1;
             weaponHitBox.transform.localPosition = weaponHitBoxLeftPos;
+            blockHitBox.transform.localPosition = blockHitBoxLeftPos;
         }
 
         // Move
@@ -167,6 +180,10 @@ public class Player : MonoBehaviour
         {
             weaponHitBoxCollider.enabled = true;
 
+            blockHitBoxCollider.enabled = false;
+
+            m_animator.SetBool("IdleBlock", false);
+
             m_currentAttack++;
 
             // Loop back to one after third attack
@@ -187,12 +204,18 @@ public class Player : MonoBehaviour
         // Block
         else if (Input.GetMouseButtonDown(1) && !m_rolling)
         {
+            blockHitBoxCollider.enabled = true;
+
             m_animator.SetTrigger("Block");
             m_animator.SetBool("IdleBlock", true);
         }
 
         else if (Input.GetMouseButtonUp(1))
+        {
+            blockHitBoxCollider.enabled = false;
+
             m_animator.SetBool("IdleBlock", false);
+        }
 
         // Roll
         else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding)
