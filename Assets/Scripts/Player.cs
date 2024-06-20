@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
 
     public float hp = 100.0f;
     private bool isDead = false;
+    [SerializeField] private GameObject optionUI;
 
     // Use this for initialization
     void Start()
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
+
+        optionUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -76,9 +79,28 @@ public class Player : MonoBehaviour
             m_animator.SetBool("noBlood", m_noBlood);
             m_animator.SetTrigger("Death");
 
+            //////////////////////////////
             // TODO: GAME END UI
+
             //////////////////////////////
         }
+
+        // Option UI
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //optionUI.SetActive(!optionUI.activeInHierarchy);
+            if (optionUI.activeInHierarchy)
+            {
+                optionUI.SetActive(false);
+                Time.timeScale = 1.0f;
+            }
+            else
+            {
+                optionUI.SetActive(true);
+                Time.timeScale = 0.0f;
+            }
+        }
+
 
         // -- Handle input and movement --
         float inputX = Input.GetAxis("Horizontal");
