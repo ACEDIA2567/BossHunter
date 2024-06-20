@@ -16,6 +16,12 @@ public class Player : MonoBehaviour
     private Sensor_HeroKnight m_wallSensorR2;
     private Sensor_HeroKnight m_wallSensorL1;
     private Sensor_HeroKnight m_wallSensorL2;
+
+    private GameObject weaponHitBox;
+    private BoxCollider2D weaponHitBoxCollider;
+    private Vector3 weaponHitBoxRightPos;
+    private Vector3 weaponHitBoxLeftPos;
+
     private bool m_isWallSliding = false;
     private bool m_grounded = false;
     private bool m_rolling = false;
@@ -41,6 +47,12 @@ public class Player : MonoBehaviour
         m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
 
+        weaponHitBox = GameObject.Find("WeaponHitBox");
+        weaponHitBoxCollider = weaponHitBox.GetComponent<BoxCollider2D>();
+        weaponHitBoxCollider.enabled = false;
+        weaponHitBoxRightPos = weaponHitBox.transform.localPosition;
+        weaponHitBoxLeftPos = new Vector3(-weaponHitBoxRightPos.x, weaponHitBoxRightPos.y, weaponHitBoxRightPos.z);
+
         optionUI.SetActive(false);
     }
 
@@ -49,6 +61,8 @@ public class Player : MonoBehaviour
     {
         // Increase timer that controls attack combo
         m_timeSinceAttack += Time.deltaTime;
+        if(weaponHitBoxCollider.enabled && m_timeSinceAttack > 0.4f)
+            weaponHitBoxCollider.enabled = false;
 
         // Increase timer that checks roll duration
         if (m_rolling)
@@ -120,12 +134,14 @@ public class Player : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().flipX = false;
             m_facingDirection = 1;
+            weaponHitBox.transform.localPosition = weaponHitBoxRightPos;
         }
 
         else if (inputX < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
             m_facingDirection = -1;
+            weaponHitBox.transform.localPosition = weaponHitBoxLeftPos;
         }
 
         // Move
@@ -135,10 +151,6 @@ public class Player : MonoBehaviour
 
     private void HandleAnimation(float inputX)
     {
-        //Wall Slide
-        m_isWallSliding = (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State());
-        m_animator.SetBool("WallSlide", m_isWallSliding);
-
         //Death
         if (Input.GetKeyDown("e") && !m_rolling)
         {
@@ -153,6 +165,8 @@ public class Player : MonoBehaviour
         //Attack
         else if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
         {
+            weaponHitBoxCollider.enabled = true;
+
             m_currentAttack++;
 
             // Loop back to one after third attack
