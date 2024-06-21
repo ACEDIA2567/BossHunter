@@ -5,18 +5,31 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+public enum SFXClip
+{
+    Attack,
+    Die,
+}
+
+public enum BGMClip
+{
+    Start,
+    Fight,
+    End
+}
+
 public class SoundManager : Singleton<SoundManager>
 {
     public AudioMixer mixer;
 
-    public AudioClip[] clipSFX;
     public AudioClip[] clipBGM;
     private AudioSource sourceMaster;
     private AudioSource sourceSFX;
     private AudioSource sourceBGM;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         AudioInit();
         sourceMaster = GetComponent<AudioSource>();
     }
@@ -26,7 +39,6 @@ public class SoundManager : Singleton<SoundManager>
         GameObject bgm = Instantiate(Resources.Load<GameObject>("Sound/BGMSource"), transform);
         GameObject sfx = Instantiate(Resources.Load<GameObject>("Sound/SFXSource"), transform);
         clipBGM = bgm.GetComponent<AudioClips>().clips;
-        clipSFX = bgm.GetComponent<AudioClips>().clips;
         sourceBGM = bgm.GetComponent<AudioSource>();
         sourceSFX = sfx.GetComponent<AudioSource>();
     }
@@ -73,8 +85,6 @@ public class SoundManager : Singleton<SoundManager>
         sourceBGM.clip = clip;
         sourceBGM.Play();
     }
-
-
 
     public void PlayShot(AudioClip clip)
     {
