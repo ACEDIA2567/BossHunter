@@ -265,4 +265,10 @@ public class Player : MonoBehaviour
                 m_animator.SetInteger("AnimState", 0);
         }
     }
+
+    public void HurtAnimation()
+    {
+        if (!m_rolling)
+            m_animator.SetTrigger("Hurt");
+    }
 }
