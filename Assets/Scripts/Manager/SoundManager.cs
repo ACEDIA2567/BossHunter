@@ -5,6 +5,19 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+public enum SFXClip
+{
+    Attack,
+    Die,
+}
+
+public enum BGMClip
+{
+    Start,
+    Fight,
+    End
+}
+
 public class SoundManager : Singleton<SoundManager>
 {
     public AudioMixer mixer;
