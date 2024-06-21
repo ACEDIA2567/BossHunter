@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
     // SH Task
     public float m_attackPower = 3000.0f;
     public bool isBlock = false;
+    public float m_blockKeepTime;
     [SerializeField] private TextMeshProUGUI curHpText;
 
     // Use this for initialization
@@ -146,6 +147,14 @@ public class Player : MonoBehaviour
 
         // юс╫ц
         curHpText.text = hp.ToString("N0");
+        if (isBlock)
+        {
+            m_blockKeepTime += Time.deltaTime;
+        }
+        else if (!isBlock)
+        {
+            m_blockKeepTime = 0.0f;
+        }
     }
 
     private void HandleInputandMovement(float inputX)

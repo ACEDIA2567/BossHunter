@@ -266,6 +266,7 @@ MonoBehaviour:
   optionUI: {fileID: 0}
   m_attackPower: 1000
   isBlock: 0
+  m_blockKeepTime: 0
   curHpText: {fileID: 343741662}
 --- !u!61 &272406391
 BoxCollider2D:
@@ -755,8 +756,8 @@ Transform:
   m_GameObject: {fileID: 763228548}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0554, y: 0.2, z: 0}
-  m_LocalScale: {x: 0.92893094, y: 0.5, z: 1}
+  m_LocalPosition: {x: -0.0061, y: 0.2, z: 0}
+  m_LocalScale: {x: 0.51200855, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1934864827}
@@ -1949,7 +1950,7 @@ MonoBehaviour:
   speed: 0
   _curHp: 0
   _attackPower: 20
-  _defensePower: 10
+  _defensePower: 3
   earthObject: {fileID: 1095334250881209528, guid: 3dd5e4bd497ea93418edb35340a5e80b, type: 3}
   slashHitBox: {fileID: 763228548}
   curHpText: {fileID: 1270772239}

@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class Minotaur : Monster
 {
-    private float _maxHp = 500000f;
+    private float _maxHp = 200000f;
     public float _curHp;
     public float _attackPower = 20f;
-    public float _defensePower = 10f;
+    public float _defensePower = 3f;
     private float _speed = 2f;
 
     private float attackCoolDown = 3f;
@@ -45,7 +45,14 @@ public class Minotaur : Monster
 
     private void Update()
     {
-        Search();
+        if(!isAttacking && defensePower == 0)
+        {
+            DestroyArmor();
+        }
+        if (!isAttacking)
+        {
+            Search();
+        }
         coolDown += Time.deltaTime;
         if (player != null && coolDown >= attackCoolDown && !isAttacking)
         {
@@ -72,7 +79,7 @@ public class Minotaur : Monster
         }
         else if(randint == 2)
         {
-            Slash();
+            SlashReady();
         }
         else
         {
@@ -121,6 +128,26 @@ public class Minotaur : Monster
         {
             Debug.Log("8 이하");
         }
+    }
+
+    // DestroyArmor
+    private void DestroyArmor()
+    {
+        isAttacking = true;
+        animator.SetBool("isDestroyArmor", true);
+    }
+
+    private void RepairArmor()
+    {
+        animator.SetBool("isDestroyArmor", false);
+        animator.SetBool("isRepairArmor", true);
+    }
+
+    private void RepairArmorEnd()
+    {
+        defensePower = _defensePower;
+        animator.SetBool("isRepairArmor", false);
+        isAttacking = false;
     }
 
     // EarthCrash
@@ -207,11 +234,16 @@ public class Minotaur : Monster
     }
 
     // Slash
-    private void Slash()
+    private void SlashReady()
     {
         isAttacking = true;
+        animator.SetBool("isSlashReady", true);
+    }
+
+    private void Slash()
+    {
+        animator.SetBool("isSlashReady", false);
         animator.SetBool("isSlash", true);
-        // TODO: 피격 기능
     }
 
     private void SlashMove()

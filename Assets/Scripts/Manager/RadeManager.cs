@@ -12,7 +12,19 @@ public class RadeManager : Singleton<RadeManager>
         float playerPower = player.m_attackPower;
         float bossDefensePower = minotaur.defensePower;
         float damage = CalculateDamage(playerPower, bossDefensePower);
+        int crit = Random.Range(0, 10);
+        if (crit <= 1)
+        {
+            damage *= 2;
+        }
         minotaur._curHp -= damage;
+    }
+
+    private void ReflectAttackToBoss()
+    {
+        float damage = 10000;
+        minotaur._curHp -= damage;
+        minotaur.defensePower -= 1;
     }
 
     public void DamageToPlayer(float additionalDamage, bool isBlock)
@@ -22,7 +34,15 @@ public class RadeManager : Singleton<RadeManager>
         damage *= additionalDamage;
         if(isBlock )
         {
-            damage = damage * 0.2f;
+            if(player.m_blockKeepTime > 0 && player.m_blockKeepTime <= 0.15f)
+            {
+                damage = 0;
+                ReflectAttackToBoss();
+            }
+            else
+            {
+                damage = damage * 0.2f;
+            }
         }
         player.hp -= damage;
     }
