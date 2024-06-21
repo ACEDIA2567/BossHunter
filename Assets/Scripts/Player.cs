@@ -39,7 +39,6 @@ public class Player : MonoBehaviour
 
     public float hp = 100.0f;
     private bool isDead = false;
-    [SerializeField] private GameObject optionUI;
 
     // Use this for initialization
     void Start()
@@ -64,7 +63,6 @@ public class Player : MonoBehaviour
         blockHitBoxRightPos = blockHitBox.transform.localPosition;
         blockHitBoxLeftPos = new Vector3(-blockHitBoxRightPos.x, blockHitBoxRightPos.y, blockHitBoxRightPos.z);
 
-        optionUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -108,22 +106,6 @@ public class Player : MonoBehaviour
             // TODO: GAME END UI
 
             //////////////////////////////
-        }
-
-        // Option UI
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            //optionUI.SetActive(!optionUI.activeInHierarchy);
-            if (optionUI.activeInHierarchy)
-            {
-                optionUI.SetActive(false);
-                Time.timeScale = 1.0f;
-            }
-            else
-            {
-                optionUI.SetActive(true);
-                Time.timeScale = 0.0f;
-            }
         }
 
 

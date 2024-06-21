@@ -8,14 +8,20 @@ public class UIManager : Singleton<UIManager>
     public GameObject optionUI;
     public GameObject dieUI;
     public GameObject stageUI;
-    public TextMeshProUGUI stageTime;
-    private TextMeshProUGUI bestClearTime;
+    public TextMeshProUGUI stageTimer;
+    public TextMeshProUGUI currentStageTime;
+    public TextMeshProUGUI bestClearTime;
     private float sec = 0;
     private int min = 0;
 
     private void Update()
     {
         StartStage();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OptionActive();
+        }
     }
 
     public void OptionActive()
@@ -44,12 +50,20 @@ public class UIManager : Singleton<UIManager>
 
         // 클리어 시간 보이게
         // 최고 클리어 시간 보이게
-        // bestClearTime.text = PlayerPrefs.GetFloat($"{clearStage}").ToString;
+        currentStageTime.text = $"{min:D2}:{(int)sec:D2}";
+        bestClearTime.text = $"{PlayerPrefs.GetInt("minTime"):D2}:{(int)PlayerPrefs.GetFloat("secTime"):D2}";
 
-        // 현재 클리어 시간이 더 짧다면
-        // 시간 단축 시 PlayerPrefs.SetFloat($"{clearStage}", float.Parse(stageTime.text));
-
-        // 아니라면 갱신 X
+        // 현재 클리어 min이 더 짧다면
+        if (PlayerPrefs.GetInt("minTime") >= min)
+        {
+            // 현재 클리어 sec이 더 짧다면
+            if (PlayerPrefs.GetFloat("secTime") > sec)
+            {
+                // 시간 저장
+                PlayerPrefs.SetFloat("secTime", sec);
+                PlayerPrefs.SetInt("minTime", min);
+            }
+        }
     }
 
     public void StartStage()
@@ -60,6 +74,6 @@ public class UIManager : Singleton<UIManager>
             min += 1;
             sec = 0;
         }
-        stageTime.text = $"{min:D2}:{(int)sec:D2}";
+        currentStageTime.text = $"{min:D2}:{(int)sec:D2}";
     }
 }
