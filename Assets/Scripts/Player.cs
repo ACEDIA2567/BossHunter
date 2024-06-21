@@ -40,7 +40,6 @@ public class Player : MonoBehaviour
 
     public float hp = 100.0f;
     private bool isDead = false;
-    [SerializeField] private GameObject optionUI;
 
     // SH Task
     public float m_attackPower = 3000.0f;
@@ -70,8 +69,6 @@ public class Player : MonoBehaviour
         blockHitBoxRightPos = blockHitBox.transform.localPosition;
         blockHitBoxLeftPos = new Vector3(-blockHitBoxRightPos.x, blockHitBoxRightPos.y, blockHitBoxRightPos.z);
 
-        optionUI.SetActive(false);
-        isBlock = false;
     }
 
     // Update is called once per frame
@@ -117,22 +114,6 @@ public class Player : MonoBehaviour
             //////////////////////////////
         }
 
-        // Option UI
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            //optionUI.SetActive(!optionUI.activeInHierarchy);
-            if (optionUI.activeInHierarchy)
-            {
-                optionUI.SetActive(false);
-                Time.timeScale = 1.0f;
-            }
-            else
-            {
-                optionUI.SetActive(true);
-                Time.timeScale = 0.0f;
-            }
-        }
-
 
         // -- Handle input and movement --
         float inputX = Input.GetAxis("Horizontal");
@@ -144,7 +125,7 @@ public class Player : MonoBehaviour
         // -- Handle Animations --
         if (!isDead) HandleAnimation(inputX);
 
-        // юс╫ц
+        // О©╫с╫О©╫
         curHpText.text = hp.ToString("N0");
     }
 
