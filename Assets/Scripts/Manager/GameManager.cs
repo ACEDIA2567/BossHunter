@@ -7,11 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    private void Start()
-    {
-        Invoke("FightStart", 5);
-    }
-
     public void IntroScene()
     {
         Time.timeScale = 1.0f;

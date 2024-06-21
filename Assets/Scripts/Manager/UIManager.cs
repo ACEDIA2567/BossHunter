@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -11,6 +14,9 @@ public class UIManager : Singleton<UIManager>
     public TextMeshProUGUI stageTimer;
     public TextMeshProUGUI currentStageTime;
     public TextMeshProUGUI bestClearTime;
+    public Slider maxSlider;
+    public Slider bgmSlider;
+    public Slider sfxSlider;
     private bool startCheck = false;
     private float sec = 0;
     private int min = 0;
@@ -23,6 +29,7 @@ public class UIManager : Singleton<UIManager>
             PlayerPrefs.SetFloat("secTime", 50);
             PlayerPrefs.SetInt("minTime", 0);
         }
+        sliderSetting();
     }
 
     private void Update()
@@ -95,5 +102,12 @@ public class UIManager : Singleton<UIManager>
     {
         stageTimer.gameObject.SetActive(true);
         startCheck = true;
+    }
+
+    public void sliderSetting()
+    {
+        maxSlider.onValueChanged.AddListener(SoundManager.Instance.SetMasterVolum);
+        bgmSlider.onValueChanged.AddListener(SoundManager.Instance.SetBGMVolume);
+        sfxSlider.onValueChanged.AddListener(SoundManager.Instance.SetSFXVolume);
     }
 }
