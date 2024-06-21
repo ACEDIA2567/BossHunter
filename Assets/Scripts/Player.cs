@@ -174,6 +174,7 @@ public class Player : MonoBehaviour
 
     private void HandleAnimation(float inputX)
     {
+        /*
         //Death
         if (Input.GetKeyDown("e") && !m_rolling)
         {
@@ -184,9 +185,10 @@ public class Player : MonoBehaviour
         //Hurt
         else if (Input.GetKeyDown("q") && !m_rolling)
             m_animator.SetTrigger("Hurt");
+        */
 
         //Attack
-        else if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
+        if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
         {
             weaponHitBoxCollider.enabled = true;
 
