@@ -107,8 +107,8 @@ public class Player : MonoBehaviour
         if (hp <= 0 && !isDead)
         {
             isDead = true;
-            m_animator.SetBool("noBlood", m_noBlood);
-            m_animator.SetTrigger("Death");
+
+            Invoke("DeathAnimation", 0.1f);
 
             //////////////////////////////
             // TODO: GAME END UI
@@ -165,6 +165,7 @@ public class Player : MonoBehaviour
 
     private void HandleAnimation(float inputX)
     {
+        /*
         //Death
         if (Input.GetKeyDown("e") && !m_rolling)
         {
@@ -175,9 +176,10 @@ public class Player : MonoBehaviour
         //Hurt
         else if (Input.GetKeyDown("q") && !m_rolling)
             m_animator.SetTrigger("Hurt");
+        */
 
         //Attack
-        else if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
+        if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
         {
             weaponHitBoxCollider.enabled = true;
 
@@ -253,5 +255,17 @@ public class Player : MonoBehaviour
             if (m_delayToIdle < 0)
                 m_animator.SetInteger("AnimState", 0);
         }
+    }
+
+    public void HurtAnimation()
+    {
+        if (!m_rolling)
+            m_animator.SetTrigger("Hurt");
+    }
+
+    private void DeathAnimation()
+    {
+        m_animator.SetBool("noBlood", m_noBlood);
+        m_animator.SetTrigger("Death");
     }
 }
