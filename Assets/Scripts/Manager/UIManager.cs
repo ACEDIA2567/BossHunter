@@ -11,6 +11,7 @@ public class UIManager : Singleton<UIManager>
     public TextMeshProUGUI stageTimer;
     public TextMeshProUGUI currentStageTime;
     public TextMeshProUGUI bestClearTime;
+    private bool startCheck = false;
     private float sec = 0;
     private int min = 0;
 
@@ -26,7 +27,16 @@ public class UIManager : Singleton<UIManager>
 
     private void Update()
     {
-        StartStage();
+        if (startCheck)
+        {
+            sec += Time.deltaTime;
+            if (sec >= 60f)
+            {
+                min += 1;
+                sec = 0;
+            }
+            stageTimer.text = $"{min:D2}:{(int)sec:D2}";
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -84,13 +94,6 @@ public class UIManager : Singleton<UIManager>
     public void StartStage()
     {
         stageTimer.gameObject.SetActive(true);
-
-        sec += Time.deltaTime;
-        if (sec >= 60f)
-        {
-            min += 1;
-            sec = 0;
-        }
-        stageTimer.text = $"{min:D2}:{(int)sec:D2}";
+        startCheck = true;
     }
 }
