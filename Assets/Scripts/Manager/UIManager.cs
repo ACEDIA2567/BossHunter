@@ -14,8 +14,9 @@ public class UIManager : Singleton<UIManager>
     private float sec = 0;
     private int min = 0;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         if (!PlayerPrefs.HasKey("secTime"))
         {
             PlayerPrefs.SetFloat("secTime", 50);
@@ -30,11 +31,6 @@ public class UIManager : Singleton<UIManager>
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OptionActive();
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            StageClear();
         }
     }
 
@@ -87,6 +83,8 @@ public class UIManager : Singleton<UIManager>
 
     public void StartStage()
     {
+        stageTimer.gameObject.SetActive(true);
+
         sec += Time.deltaTime;
         if (sec >= 60f)
         {

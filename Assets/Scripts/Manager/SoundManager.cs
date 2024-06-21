@@ -27,8 +27,9 @@ public class SoundManager : Singleton<SoundManager>
     private AudioSource sourceSFX;
     private AudioSource sourceBGM;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         AudioInit();
         sourceMaster = GetComponent<AudioSource>();
     }
