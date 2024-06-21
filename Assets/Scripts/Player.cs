@@ -108,8 +108,8 @@ public class Player : MonoBehaviour
         if (hp <= 0 && !isDead)
         {
             isDead = true;
-            m_animator.SetBool("noBlood", m_noBlood);
-            m_animator.SetTrigger("Death");
+
+            Invoke("DeathAnimation", 0.1f);
 
             //////////////////////////////
             // TODO: GAME END UI
@@ -270,5 +270,11 @@ public class Player : MonoBehaviour
     {
         if (!m_rolling)
             m_animator.SetTrigger("Hurt");
+    }
+
+    private void DeathAnimation()
+    {
+        m_animator.SetBool("noBlood", m_noBlood);
+        m_animator.SetTrigger("Death");
     }
 }

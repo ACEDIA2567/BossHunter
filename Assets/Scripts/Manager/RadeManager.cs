@@ -27,7 +27,10 @@ public class RadeManager : Singleton<RadeManager>
         player.hp -= damage;
 
         // player hurt animation
-        player.HurtAnimation();
+        if (player.hp > 0)
+        {
+            player.HurtAnimation();
+        }
     }
 
     private float CalculateDamage(float attackPower, float defensePower)
