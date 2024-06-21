@@ -9,11 +9,13 @@ public class GameManager : Singleton<GameManager>
 {
     public void IntroScene()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(0);
     }
 
     public void InGameScene()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(1);
     }
 
