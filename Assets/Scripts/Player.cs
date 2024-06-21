@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] float m_jumpForce = 7.5f;
     [SerializeField] float m_rollForce = 6.0f;
     [SerializeField] bool m_noBlood = false;
-
+    
     private Animator m_animator;
     private Rigidbody2D m_body2d;
     private Sensor_HeroKnight m_groundSensor;
@@ -41,6 +42,11 @@ public class Player : MonoBehaviour
     private bool isDead = false;
     [SerializeField] private GameObject optionUI;
 
+    // SH Task
+    public float m_attackPower = 3000.0f;
+    public bool isBlock = false;
+    [SerializeField] private TextMeshProUGUI curHpText;
+
     // Use this for initialization
     void Start()
     {
@@ -65,6 +71,7 @@ public class Player : MonoBehaviour
         blockHitBoxLeftPos = new Vector3(-blockHitBoxRightPos.x, blockHitBoxRightPos.y, blockHitBoxRightPos.z);
 
         optionUI.SetActive(false);
+        isBlock = false;
     }
 
     // Update is called once per frame
@@ -72,7 +79,7 @@ public class Player : MonoBehaviour
     {
         // Increase timer that controls attack combo
         m_timeSinceAttack += Time.deltaTime;
-        if(weaponHitBoxCollider.enabled && m_timeSinceAttack > 0.4f)
+        if(weaponHitBoxCollider.enabled && m_timeSinceAttack > 0.1f)
             weaponHitBoxCollider.enabled = false;
 
         // Increase timer that checks roll duration
@@ -136,6 +143,9 @@ public class Player : MonoBehaviour
 
         // -- Handle Animations --
         if (!isDead) HandleAnimation(inputX);
+
+        // юс╫ц
+        curHpText.text = hp.ToString("N0");
     }
 
     private void HandleInputandMovement(float inputX)
@@ -205,7 +215,7 @@ public class Player : MonoBehaviour
         else if (Input.GetMouseButtonDown(1) && !m_rolling)
         {
             blockHitBoxCollider.enabled = true;
-
+            isBlock = true;
             m_animator.SetTrigger("Block");
             m_animator.SetBool("IdleBlock", true);
         }
@@ -213,7 +223,7 @@ public class Player : MonoBehaviour
         else if (Input.GetMouseButtonUp(1))
         {
             blockHitBoxCollider.enabled = false;
-
+            isBlock = false;
             m_animator.SetBool("IdleBlock", false);
         }
 

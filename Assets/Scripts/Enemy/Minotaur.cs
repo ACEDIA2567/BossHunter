@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public class Minotaur : Monster
 {
-    private float _maxHp = 1000000f;
-    private float _attackPower = 20f;
-    private float _defensePower = 10f;
+    private float _maxHp = 500000f;
+    public float _curHp;
+    public float _attackPower = 20f;
+    public float _defensePower = 10f;
     private float _speed = 2f;
 
     private float attackCoolDown = 3f;
     private float coolDown;
     GameObject player;
+    private Player playerComponent;
     private bool isMoving = true;
     private bool isAttacking = false;
 
@@ -20,11 +23,16 @@ public class Minotaur : Monster
     private SpriteRenderer spriteRenderer;
 
     [SerializeField] private GameObject earthObject;
+    [SerializeField] private GameObject slashHitBox;
+
+    // 임시
+    [SerializeField] private TextMeshProUGUI curHpText;
 
 
     private void Start()
     {
         maxHp = _maxHp;
+        _curHp = maxHp;
         attackPower = _attackPower;
         defensePower = _defensePower;
         speed = _speed;
@@ -32,6 +40,7 @@ public class Minotaur : Monster
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
+        playerComponent = player.GetComponent<Player>();
     }
 
     private void Update()
@@ -43,6 +52,10 @@ public class Minotaur : Monster
             coolDown = 0;
             DoAction();
         }
+        // curHp == 0 -> 죽어라
+
+        // 임시
+        curHpText.text = _curHp.ToString("N0");
     }
 
     public override void DoAction()
@@ -164,16 +177,26 @@ public class Minotaur : Monster
         if (distance < 4)
         {
             Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-            Vector2 knockbackForce;
-            if (spriteRenderer.flipX)
+            Transform blockHitBoxTransform = player.transform.Find("BlockHitBox");
+            BoxCollider2D blockHitBoxCollider = blockHitBoxTransform.GetComponent<BoxCollider2D>();
+            if (!blockHitBoxCollider.enabled)
             {
-                knockbackForce = new Vector2(-10f, 5f);
+                Vector2 knockbackForce;
+                if (spriteRenderer.flipX)
+                {
+                    knockbackForce = new Vector2(-10f, 5f);
+                }
+                else
+                {
+                    knockbackForce = new Vector2(10f, 5f);
+                }
+                rb.AddForce(knockbackForce, ForceMode2D.Impulse);
             }
             else
             {
-                knockbackForce = new Vector2(10f, 5f);
+                Debug.Log("Blocked!");
             }
-            rb.AddForce(knockbackForce, ForceMode2D.Impulse);
+            RadeManager.Instance.DamageToPlayer(1.5f, playerComponent.isBlock);
         }
     }
 
@@ -193,7 +216,9 @@ public class Minotaur : Monster
 
     private void SlashMove()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, (speed));
+        slashHitBox.SetActive(true);
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, (speed / 2));
+
     }
 
     private void SlashEnd()

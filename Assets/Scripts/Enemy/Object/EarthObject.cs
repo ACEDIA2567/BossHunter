@@ -23,9 +23,20 @@ public class EarthObject : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
-            if(rb != null )
+            Player player = collision.GetComponent<Player>();
+            Transform blockHitBoxTransform = collision.transform.Find("BlockHitBox");
+            BoxCollider2D blockHitBoxCollider = blockHitBoxTransform.GetComponent<BoxCollider2D>();
+            if (rb != null )
             {
-                rb.velocity = new Vector2(rb.velocity.x, airborneForce);
+                if (!blockHitBoxCollider.enabled)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, airborneForce);
+                }
+                else
+                {
+                    Debug.Log("Blocked!");
+                }
+                RadeManager.Instance.DamageToPlayer(1.5f, player.isBlock);
             }
         }
     }
