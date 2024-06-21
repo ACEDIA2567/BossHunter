@@ -14,6 +14,15 @@ public class UIManager : Singleton<UIManager>
     private float sec = 0;
     private int min = 0;
 
+    private void Awake()
+    {
+        if (!PlayerPrefs.HasKey("secTime"))
+        {
+            PlayerPrefs.SetFloat("secTime", 50);
+            PlayerPrefs.SetInt("minTime", 0);
+        }
+    }
+
     private void Update()
     {
         StartStage();
@@ -21,6 +30,11 @@ public class UIManager : Singleton<UIManager>
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OptionActive();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            StageClear();
         }
     }
 
@@ -44,17 +58,18 @@ public class UIManager : Singleton<UIManager>
         Time.timeScale = 0;
     }
 
-    public void StageClear(int clearStage)
+    public void StageClear()
     {
         stageUI.SetActive(true);
 
-        // 클리어 시간 보이게
-        // 최고 클리어 시간 보이게
-        currentStageTime.text = $"{min:D2}:{(int)sec:D2}";
-        bestClearTime.text = $"{PlayerPrefs.GetInt("minTime"):D2}:{(int)PlayerPrefs.GetFloat("secTime"):D2}";
-
         // 현재 클리어 min이 더 짧다면
-        if (PlayerPrefs.GetInt("minTime") >= min)
+        if (PlayerPrefs.GetInt("minTime") > min)
+        {
+            // 시간 저장
+            PlayerPrefs.SetFloat("secTime", sec);
+            PlayerPrefs.SetInt("minTime", min);
+        }
+        else if (PlayerPrefs.GetInt("minTime") == min)
         {
             // 현재 클리어 sec이 더 짧다면
             if (PlayerPrefs.GetFloat("secTime") > sec)
@@ -64,6 +79,10 @@ public class UIManager : Singleton<UIManager>
                 PlayerPrefs.SetInt("minTime", min);
             }
         }
+
+        currentStageTime.text = $"{min:D2}:{(int)sec:D2}";
+        bestClearTime.text = $"{PlayerPrefs.GetInt("minTime"):D2}:{(int)PlayerPrefs.GetFloat("secTime"):D2}";
+        Time.timeScale = 0;
     }
 
     public void StartStage()
@@ -74,6 +93,6 @@ public class UIManager : Singleton<UIManager>
             min += 1;
             sec = 0;
         }
-        currentStageTime.text = $"{min:D2}:{(int)sec:D2}";
+        stageTimer.text = $"{min:D2}:{(int)sec:D2}";
     }
 }
