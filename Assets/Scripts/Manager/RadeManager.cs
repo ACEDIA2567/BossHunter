@@ -29,7 +29,7 @@ public class RadeManager : Singleton<RadeManager>
         bossHitParticle.Play();
     }
 
-    private void ReflectAttackToBoss()
+    public void ReflectAttackToBoss()
     {
         float damage = 10000;
         minotaur._curHp -= damage;

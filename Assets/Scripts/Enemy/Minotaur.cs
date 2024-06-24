@@ -19,11 +19,18 @@ public class Minotaur : Monster
     private bool isMoving = true;
     private bool isAttacking = false;
 
+    private bool isInitDone = false;
+    private bool isBigSlashDone = false;
+
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
     [SerializeField] private GameObject earthObject;
     [SerializeField] private GameObject slashHitBox;
+    [SerializeField] private GameObject initHitBox;
+    [SerializeField] private GameObject bigSlashObject;
+
+    private int bigSlashCount = 0;
 
     // 임시
     [SerializeField] private TextMeshProUGUI curHpText;
@@ -45,15 +52,31 @@ public class Minotaur : Monster
 
     private void Update()
     {
-        if(!isAttacking && defensePower <= 0)
+        if (!isInitDone)
+        {
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance <= 10f)
+            {
+                InitReady();
+            }
+        }
+
+        if((_curHp / maxHp) < 0.4f && !isBigSlashDone)
+        {
+            BigReady();
+        }
+
+        if (!isAttacking && defensePower <= 0)
         {
             DestroyArmor();
         }
+
         if (!isAttacking)
         {
             Search();
         }
         coolDown += Time.deltaTime;
+
         if (player != null && coolDown >= attackCoolDown && !isAttacking)
         {
             coolDown = 0;
@@ -106,13 +129,13 @@ public class Minotaur : Monster
         if (isMoving && player != gameObject)
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
-            if(distance > 8.0f)
+            if(distance > 5.0f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
                 animator.SetBool("isRun", true);
                 distance = Vector3.Distance(transform.position, player.transform.position);
 
-                if(distance <= 8.0f)
+                if(distance <= 5.0f)
                 {
                     isMoving = false;
                     animator.SetBool("isRun", false);
@@ -267,6 +290,64 @@ public class Minotaur : Monster
         isAttacking = false;
         animator.SetBool("isSlash", false);
     }
-}
 
-// Search 하고 일정 범위 밖이면 이동, Player로 부터 8 까지의 거리까지 도달하면 Stop
+    // Init
+    private void InitReady()
+    {
+        isAttacking = true;
+        isInitDone = true;
+        animator.SetBool("isInitReady", true) ;
+    }
+
+    private void InitPattern()
+    {
+        animator.SetBool("isInitReady", false);
+        animator.SetBool("isInitPattern", true);
+
+        transform.position = player.transform.position + new Vector3(0, 10, 0);
+        initHitBox.SetActive (true);
+    }
+
+    private void InitEnd()
+    {
+        isAttacking = false;
+        animator.SetBool("isInitPattern", false);
+    }
+
+    // BigSlash
+    private void BigReady()
+    {
+        isAttacking = true;
+        isBigSlashDone = true;
+        animator.SetBool("isBigReady", true);
+    }
+
+    private void BigSlashReady()
+    {
+        animator.SetBool("isBigReady", false) ;
+        animator.SetBool("isBigSlashReady", true);
+    }
+
+    private void BigSlash()
+    {
+        if(bigSlashCount < 3)
+        {
+            bigSlashCount++;
+            animator.SetBool("isBigSlash", true);
+            GameObject go = Instantiate(bigSlashObject);
+            go.transform.position = transform.position;
+            animator.SetBool("isBigSlash", false);
+        }
+        else
+        {
+            BigSlashEnd();
+        }
+    }
+
+    private void BigSlashEnd()
+    {
+        animator.SetBool("isBigSlash", false);
+        animator.SetBool("isBigSlashReady", false );
+        isAttacking = false;
+    }
+}
