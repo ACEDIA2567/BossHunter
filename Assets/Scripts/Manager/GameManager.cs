@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -8,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     public GameObject monster;
+    public Minotaur minotaur;
     public GameObject player;
 
     public void IntroScene()
@@ -23,6 +25,7 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(1);
         SoundManager.Instance.PlaySound(SoundManager.Instance.clipBGM[(int)BGMClip.InGame]);
     }
+
 
     public void GameExit()
     {
@@ -44,7 +47,9 @@ public class GameManager : Singleton<GameManager>
     public void FightStart()
     {
         // 몬스터 생성
-        Instantiate(monster, GameObject.Find("MonsterSpawnPos").transform);
+        monster = GameObject.Find("Minotaur").gameObject;
+        monster.SetActive(true);
+        minotaur = monster.GetComponent<Minotaur>();
         // 카메라로 몬스터 보여주기
         CameraManager.Instance.SpawnCamera();
         // 그 후 다시 플레이어 위치로 이동

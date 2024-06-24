@@ -59,6 +59,11 @@ public class Player : MonoBehaviour
     public bool isBlock = false;
     public float m_blockKeepTime;
 
+    private void Awake()
+    {
+        GameManager.Instance.player = transform.gameObject;
+    }
+
     // Use this for initialization
     void Start()
     {

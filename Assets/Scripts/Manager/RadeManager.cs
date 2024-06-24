@@ -8,6 +8,13 @@ public class RadeManager : Singleton<RadeManager>
     public Player player;
     public ParticleSystem bossHitParticle;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        minotaur = GameManager.Instance.minotaur;
+        player = GameManager.Instance.player.GetComponent<Player>();
+    }
+
     public void DamageToBoss()
     {
         float playerPower = player.m_attackPower;

@@ -87,9 +87,6 @@ public class Minotaur : Monster
         {
             Death();
         }
-
-        // юс╫ц
-        curHpText.text = _curHp.ToString("N0");
     }
 
     public override void DoAction()
