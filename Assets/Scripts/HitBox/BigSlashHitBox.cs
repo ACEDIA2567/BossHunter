@@ -50,14 +50,7 @@ public class BigSlashHitBox : MonoBehaviour
         }
 
         // 오브젝트를 이동시킵니다.
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, 5 * Time.deltaTime);
-    }
-
-    public void ReflectMove()
-    {
-        SpriteFlip();
-        transform.position = Vector3.MoveTowards(transform.position, -_player.transform.position, 10 * Time.deltaTime);
-        targetTag = "Boss";
+        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, 10 * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

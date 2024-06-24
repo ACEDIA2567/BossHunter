@@ -82,7 +82,11 @@ public class Minotaur : Monster
             coolDown = 0;
             DoAction();
         }
-        // curHp == 0 -> ав╬Н╤С
+        
+        if(_curHp <= 0)
+        {
+            Death();
+        }
 
         // юс╫ц
         curHpText.text = _curHp.ToString("N0");
@@ -349,5 +353,12 @@ public class Minotaur : Monster
         animator.SetBool("isBigSlash", false);
         animator.SetBool("isBigSlashReady", false );
         isAttacking = false;
+    }
+
+    // Death
+    private void Death()
+    {
+        animator.SetBool("isDeath", true);
+        isAttacking = true;
     }
 }
