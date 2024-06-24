@@ -625,6 +625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 138bf83e52d138646b8d5eb240bc8397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monster: {fileID: 1095334250881209528, guid: 3dd5e4bd497ea93418edb35340a5e80b, type: 3}
+  player: {fileID: 0}
 --- !u!4 &532598593
 Transform:
   m_ObjectHideFlags: 0
