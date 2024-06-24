@@ -45,7 +45,7 @@ public class Minotaur : Monster
 
     private void Update()
     {
-        if(!isAttacking && defensePower == 0)
+        if(!isAttacking && defensePower <= 0)
         {
             DestroyArmor();
         }
@@ -249,7 +249,16 @@ public class Minotaur : Monster
     private void SlashMove()
     {
         slashHitBox.SetActive(true);
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, (speed / 2));
+        Vector3 targetPosition;
+        if (spriteRenderer.flipX)
+        {
+            targetPosition = new Vector3(transform.position.x - 10, transform.position.y, transform.position.z);
+        }
+        else
+        {
+            targetPosition = new Vector3(transform.position.x + 10, transform.position.y, transform.position.z);
+        }
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, (speed));
 
     }
 

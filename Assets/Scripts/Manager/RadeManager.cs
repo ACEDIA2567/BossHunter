@@ -6,6 +6,7 @@ public class RadeManager : Singleton<RadeManager>
 {
     public Minotaur minotaur;
     public Player player;
+    public ParticleSystem bossHitParticle;
 
     public void DamageToBoss()
     {
@@ -18,6 +19,14 @@ public class RadeManager : Singleton<RadeManager>
             damage *= 2;
         }
         minotaur._curHp -= damage;
+
+        // particle
+        bossHitParticle.transform.position = minotaur.transform.position + new Vector3(0, 1f, 0);
+        ParticleSystem.EmissionModule em = bossHitParticle.emission;
+        em.SetBurst(0, new ParticleSystem.Burst(0, Mathf.Ceil(playerPower / 200f)));
+        ParticleSystem.MainModule mm = bossHitParticle.main;
+        mm.startSpeedMultiplier = playerPower / 100f;
+        bossHitParticle.Play();
     }
 
     private void ReflectAttackToBoss()
