@@ -44,10 +44,14 @@ public class RadeManager : Singleton<RadeManager>
                 damage = damage * 0.2f;
             }
         }
+        if (player.IsPlayerRolling())
+        {
+            damage = 0f;
+        }
         player.hp -= damage;
 
         // player hurt animation
-        if (player.hp > 0)
+        if (player.hp > 0 && damage > 0f)
         {
             player.HurtAnimation();
         }
