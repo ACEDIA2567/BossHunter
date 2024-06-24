@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RadeManager : Singleton<RadeManager>
+public class RadeManager : MonoBehaviour
 {
+    public static RadeManager Instance;
+
     public Minotaur minotaur;
     public Player player;
     public ParticleSystem bossHitParticle;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        if (Instance != null) return;
+        else
+        {
+            Instance = this;
+        }
         player = GameManager.Instance.player.GetComponent<Player>();
     }
 
@@ -25,6 +31,7 @@ public class RadeManager : Singleton<RadeManager>
             damage *= 2;
         }
         minotaur._curHp -= damage;
+        BossHPUpdate();
 
         // particle
         bossHitParticle.transform.position = minotaur.transform.position + new Vector3(0, 1f, 0);
@@ -40,6 +47,7 @@ public class RadeManager : Singleton<RadeManager>
         float damage = 10000;
         minotaur._curHp -= damage;
         minotaur.defensePower -= 1;
+        BossHPUpdate();
     }
 
     public void DamageToPlayer(float additionalDamage, bool isBlock)
@@ -64,6 +72,7 @@ public class RadeManager : Singleton<RadeManager>
             damage = 0f;
         }
         player.hp -= damage;
+        UIManager.Instance.playerHP.fillAmount = player.hp / 100;
 
         // player hurt animation
         if (player.hp > 0 && damage > 0f)
@@ -83,5 +92,10 @@ public class RadeManager : Singleton<RadeManager>
         float damage = randomAttackPower * (1 - damageReduction);
 
         return damage;
+    }
+
+    private void BossHPUpdate()
+    {
+        UIManager.Instance.bossHP.fillAmount = minotaur._curHp / minotaur.maxHp;
     }
 }

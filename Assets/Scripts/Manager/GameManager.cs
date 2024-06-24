@@ -30,18 +30,6 @@ public class GameManager : Singleton<GameManager>
         Application.Quit();
     }
 
-    public void PlayerDie()
-    {
-        UIManager.Instance.PlayerDie();
-        SoundManager.Instance.PlaySound(SoundManager.Instance.clipBGM[(int)BGMClip.End]);
-    }
-
-    public void PlayerWin()
-    {
-        UIManager.Instance.StageClear();
-        SoundManager.Instance.PlaySound(SoundManager.Instance.clipBGM[(int)BGMClip.End]);
-    }
-
     public void FightStart()
     {
         // 몬스터 생성
@@ -54,5 +42,19 @@ public class GameManager : Singleton<GameManager>
         SoundManager.Instance.PlaySound(SoundManager.Instance.clipBGM[(int)BGMClip.Fight]);
         // 타이머 가동 및 UI 활성화
         UIManager.Instance.StartStage();
+    }
+
+    public IEnumerator PlayerWin()
+    {
+        yield return new WaitForSeconds(2.0f);
+        UIManager.Instance.StageClear();
+        SoundManager.Instance.PlaySound(SoundManager.Instance.clipBGM[(int)BGMClip.End]);
+    }
+
+    public IEnumerator PlayerDie()
+    {
+        yield return new WaitForSeconds(2.0f);
+        UIManager.Instance.PlayerDie();
+        SoundManager.Instance.PlaySound(SoundManager.Instance.clipBGM[(int)BGMClip.End]);
     }
 }

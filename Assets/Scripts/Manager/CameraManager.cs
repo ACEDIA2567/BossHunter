@@ -3,14 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : Singleton<CameraManager>
+public class CameraManager : MonoBehaviour
 {
+    public static CameraManager Instance;
+
     CinemachineBlendListCamera blendList;
 
     GameObject camera1;
     GameObject camera2;
     CinemachineVirtualCameraBase vCam1;
     CinemachineVirtualCameraBase vCam2;
+
+    private void Awake()
+    {
+        if (Instance != null) return;
+        else
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {

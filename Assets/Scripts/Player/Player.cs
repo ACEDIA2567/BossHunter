@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -59,8 +60,11 @@ public class Player : MonoBehaviour
     public bool isBlock = false;
     public float m_blockKeepTime;
 
+    private AudioClips clips;
+
     private void Awake()
     {
+        clips = GetComponent<AudioClips>();
         GameManager.Instance.player = transform.gameObject;
     }
 
@@ -143,6 +147,7 @@ public class Player : MonoBehaviour
         {
             sp = 100.0f;
         }
+        UIManager.Instance.playerSP.fillAmount = sp / 100.0f;
 
         // -- Handle input and movement --
         float inputX = Input.GetAxis("Horizontal");
@@ -214,6 +219,14 @@ public class Player : MonoBehaviour
             // Call one of three attack animations "Attack1", "Attack2", "Attack3"
             m_animator.SetTrigger("Attack" + m_currentAttack);
 
+            if (m_currentAttack == 2)
+            {
+                clips.PlaySFX(SFXClip.Attack1);
+            }
+            else
+            {
+                clips.PlaySFX(SFXClip.Attack2);
+            }
             // Reset timer
             m_timeSinceAttack = 0.0f;
         }
@@ -225,6 +238,7 @@ public class Player : MonoBehaviour
             isBlock = true;
             m_animator.SetTrigger("Block");
             m_animator.SetBool("IdleBlock", true);
+            clips.PlaySFX(SFXClip.parrying);
         }
 
         else if (Input.GetMouseButtonUp(1) || sp < spLimitCost)
@@ -283,7 +297,7 @@ public class Player : MonoBehaviour
     {
         m_animator.SetBool("noBlood", m_noBlood);
         m_animator.SetTrigger("Death");
-        GameManager.Instance.PlayerDie();
+        StartCoroutine(GameManager.Instance.PlayerDie());
     }
 
     public bool IsPlayerRolling()

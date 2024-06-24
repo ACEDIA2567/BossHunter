@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-
 public class Minotaur : Monster
 {
     private float _maxHp = 200000f;
@@ -11,31 +10,23 @@ public class Minotaur : Monster
     public float _attackPower = 20f;
     public float _defensePower = 3f;
     private float _speed = 2f;
-
     private float attackCoolDown = 3f;
     private float coolDown;
-    GameObject player;
-    private Player playerComponent;
-    private bool isMoving = true;
-    private bool isAttacking = false;
-
+    public GameObject player;
+    public Player playerComponent;
+    public bool isMoving = true;
+    public bool isAttacking = false;
     private bool isInitDone = false;
     private bool isBigSlashDone = false;
-
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-
     [SerializeField] private GameObject earthObject;
     [SerializeField] private GameObject slashHitBox;
     [SerializeField] private GameObject initHitBox;
     [SerializeField] private GameObject bigSlashObject;
-
     private int bigSlashCount = 0;
-
     // ¿”Ω√
     [SerializeField] private TextMeshProUGUI curHpText;
-
-
     private void Start()
     {
         maxHp = _maxHp;
@@ -49,47 +40,44 @@ public class Minotaur : Monster
         player = GameObject.FindGameObjectWithTag("Player");
         playerComponent = player.GetComponent<Player>();
     }
-
     private void Update()
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (!isInitDone)
         {
-            
             if (distance <= 10f)
             {
                 InitReady();
             }
         }
-
-        if((_curHp / maxHp) < 0.4f && !isBigSlashDone)
+        if ((_curHp / maxHp) < 0.4f && !isBigSlashDone)
         {
             BigReady();
         }
-
         if (!isAttacking && defensePower <= 0)
         {
             DestroyArmor();
         }
-
-        if (!isAttacking && distance >= 0)
+        if (!isAttacking)
         {
             Search();
         }
         coolDown += Time.deltaTime;
-
         if (player != null && coolDown >= attackCoolDown && !isAttacking)
         {
             coolDown = 0;
             DoAction();
         }
-        
-        if(_curHp <= 0)
+        if (isAttacking && isMoving)
+        {
+            isAttacking = false;
+            isMoving = false;
+        }
+        if (_curHp <= 0)
         {
             Death();
         }
     }
-
     public override void DoAction()
     {
         int randint = Random.Range(0, 3);
@@ -102,7 +90,7 @@ public class Minotaur : Monster
         {
             EarthCrashReady();
         }
-        else if(randint == 2)
+        else if (randint == 2)
         {
             SlashReady();
         }
@@ -111,10 +99,9 @@ public class Minotaur : Monster
             Debug.Log("π∫∞° ¿ﬂ∏¯µ ");
         }
     }
-
     private void SpriteFlip()
     {
-        if(player.transform.position.x > transform.position.x)
+        if (player.transform.position.x > transform.position.x)
         {
             spriteRenderer.flipX = false;
         }
@@ -123,7 +110,6 @@ public class Minotaur : Monster
             spriteRenderer.flipX = true;
         }
     }
-
     private void Search()
     {
         isMoving = true;
@@ -131,13 +117,12 @@ public class Minotaur : Monster
         if (isMoving && player != gameObject)
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
-            if(distance > 5.0f)
+            if (distance > 5.0f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
                 animator.SetBool("isRun", true);
                 distance = Vector3.Distance(transform.position, player.transform.position);
-
-                if(distance <= 5.0f)
+                if (distance <= 5.0f)
                 {
                     isMoving = false;
                     animator.SetBool("isRun", false);
@@ -154,41 +139,35 @@ public class Minotaur : Monster
             Debug.Log("8 ¿Ã«œ");
         }
     }
-
     // DestroyArmor
     private void DestroyArmor()
     {
         isAttacking = true;
         animator.SetBool("isDestroyArmor", true);
     }
-
     private void RepairArmor()
     {
         animator.SetBool("isDestroyArmor", false);
         animator.SetBool("isRepairArmor", true);
     }
-
     private void RepairArmorEnd()
     {
         defensePower = _defensePower;
         animator.SetBool("isRepairArmor", false);
         isAttacking = false;
     }
-
     // EarthCrash
     private void EarthCrashReady()
     {
         isAttacking = true;
         animator.SetBool("isEarthCrashReady", true);
     }
-
     private void EarthCrash()
     {
         animator.SetBool("isEarthCrashReady", false);
         animator.SetBool("isEarthCrash", true);
         StartCoroutine(EarthObjectCoroutine());
     }
-
     private IEnumerator EarthObjectCoroutine()
     {
         Vector3 earthPosition = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
@@ -203,24 +182,20 @@ public class Minotaur : Monster
             fo.transform.position = forwardEarthPosition;
             GameObject bo = Instantiate(earthObject, transform);
             bo.transform.position = backEarthPosition;
-
             yield return new WaitForSeconds(0.3f);
         }
     }
-
     private void EarthCrashEnd()
     {
         isAttacking = false;
         animator.SetBool("isEarthCrash", false);
     }
-
     //WindMill
     private void WindMillReady()
     {
         isAttacking = true;
         animator.SetBool("isWindMillReady", true);
     }
-
     private void WindMill()
     {
         animator.SetBool("isWindMillReady", false);
@@ -251,26 +226,22 @@ public class Minotaur : Monster
             RadeManager.Instance.DamageToPlayer(1.5f, playerComponent.isBlock);
         }
     }
-
     private void WindMillEnd()
     {
         isAttacking = false;
         animator.SetBool("isWindMill", false);
     }
-
     // Slash
     private void SlashReady()
     {
         isAttacking = true;
         animator.SetBool("isSlashReady", true);
     }
-
     private void Slash()
     {
         animator.SetBool("isSlashReady", false);
         animator.SetBool("isSlash", true);
     }
-
     private void SlashMove()
     {
         slashHitBox.SetActive(true);
@@ -284,38 +255,31 @@ public class Minotaur : Monster
             targetPosition = new Vector3(transform.position.x + 10, transform.position.y, transform.position.z);
         }
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, (speed));
-
     }
-
     private void SlashEnd()
     {
         isAttacking = false;
         animator.SetBool("isSlash", false);
     }
-
     // Init
     private void InitReady()
     {
         isAttacking = true;
         isInitDone = true;
-        animator.SetBool("isInitReady", true) ;
+        animator.SetBool("isInitReady", true);
     }
-
     private void InitPattern()
     {
         animator.SetBool("isInitReady", false);
         animator.SetBool("isInitPattern", true);
-
         transform.position = player.transform.position + new Vector3(0, 10, 0);
-        initHitBox.SetActive (true);
+        initHitBox.SetActive(true);
     }
-
     private void InitEnd()
     {
-        isAttacking = false;
         animator.SetBool("isInitPattern", false);
+        isAttacking = false;
     }
-
     // BigSlash
     private void BigReady()
     {
@@ -323,16 +287,14 @@ public class Minotaur : Monster
         isBigSlashDone = true;
         animator.SetBool("isBigReady", true);
     }
-
     private void BigSlashReady()
     {
-        animator.SetBool("isBigReady", false) ;
+        animator.SetBool("isBigReady", false);
         animator.SetBool("isBigSlashReady", true);
     }
-
     private void BigSlash()
     {
-        if(bigSlashCount < 3)
+        if (bigSlashCount < 3)
         {
             bigSlashCount++;
             animator.SetBool("isBigSlash", true);
@@ -345,19 +307,17 @@ public class Minotaur : Monster
             BigSlashEnd();
         }
     }
-
     private void BigSlashEnd()
     {
         animator.SetBool("isBigSlash", false);
-        animator.SetBool("isBigSlashReady", false );
+        animator.SetBool("isBigSlashReady", false);
         isAttacking = false;
     }
-
     // Death
     private void Death()
     {
         animator.SetBool("isDeath", true);
         isAttacking = true;
-        GameManager.Instance.PlayerWin();
+        StartCoroutine(GameManager.Instance.PlayerWin());
     }
 }

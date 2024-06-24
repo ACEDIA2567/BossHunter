@@ -1355,31 +1355,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 258637592}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 55652640}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GameExit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &258637592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2261,7 +2237,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.2, y: -40.4, z: -10}
+  m_LocalPosition: {x: -21.6, y: -1.5999999, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2398,38 +2374,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
---- !u!1 &560492930
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 560492931}
-  m_Layer: 0
-  m_Name: Player
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &560492931
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 560492930}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.2, y: -41.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1223610611}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &618604361
 GameObject:
   m_ObjectHideFlags: 0
@@ -3405,25 +3349,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 55652640}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: InGameScene
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -12226,8 +12158,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 2089146385}
-  m_Follow: {fileID: 2089146385}
+  m_LookAt: {fileID: 7404052241085612889}
+  m_Follow: {fileID: 7404052241085612889}
   m_Lens:
     FieldOfView: 34
     OrthographicSize: 4
@@ -12256,7 +12188,7 @@ Transform:
   m_GameObject: {fileID: 918279041}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 49.41, y: -44.280003, z: -10.370737}
+  m_LocalPosition: {x: 46.1, y: -42.9, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12729,10 +12661,10 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_VirtualCamera: {fileID: 0}
-    m_Hold: 0.5
+    m_Hold: 1
     m_Blend:
       m_Style: 1
-      m_Time: 1
+      m_Time: 0.5
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -12743,7 +12675,7 @@ MonoBehaviour:
     m_Hold: 0
     m_Blend:
       m_Style: 1
-      m_Time: 1
+      m_Time: 0.5
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -13037,7 +12969,7 @@ Transform:
   m_GameObject: {fileID: 1076821099}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.24, y: -36.9, z: 0}
+  m_LocalPosition: {x: 21.64, y: -37.98, z: 0}
   m_LocalScale: {x: 1, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14061,8 +13993,9 @@ GameObject:
   - component: {fileID: 1223610614}
   - component: {fileID: 1223610613}
   - component: {fileID: 1223610612}
+  - component: {fileID: 1223610617}
   m_Layer: 0
-  m_Name: HeroKnight
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14076,8 +14009,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223610610}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -21.6, y: -2.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14088,7 +14021,7 @@ Transform:
   - {fileID: 11081558}
   - {fileID: 1138967266}
   - {fileID: 1697121228}
-  m_Father: {fileID: 560492931}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1223610612
 MonoBehaviour:
@@ -14261,6 +14194,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1223610617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223610610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fd82608b94a044d84407283bdc1ccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 3819e2c8836a27742b0167ad83b1d109, type: 3}
+  - {fileID: 8300000, guid: 4eeb87eb2cb26cf44b23d0f93894b419, type: 3}
+  - {fileID: 8300000, guid: 195cca9a8f9f395418b2ab6e51132150, type: 3}
 --- !u!1 &1228207245
 GameObject:
   m_ObjectHideFlags: 0
@@ -32374,6 +32323,10 @@ MonoBehaviour:
   masterToggle: {fileID: 131328550}
   bgmToggle: {fileID: 1323351064}
   sfxToggle: {fileID: 532177641}
+  clearReStart: {fileID: 629249650}
+  clearExit: {fileID: 1111843383}
+  overReStart: {fileID: 821454745}
+  overExit: {fileID: 258637591}
 --- !u!4 &1574181146
 Transform:
   m_ObjectHideFlags: 0
@@ -33174,7 +33127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minotaur: {fileID: 6023572203416529632}
-  player: {fileID: 0}
+  player: {fileID: 1223610612}
   bossHitParticle: {fileID: 844545730}
 --- !u!4 &1710843264
 Transform:
@@ -33892,7 +33845,7 @@ Transform:
   m_GameObject: {fileID: 1862199238}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 27.2, y: -40.4, z: -10}
+  m_LocalPosition: {x: -21.6, y: -1.5999999, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -35161,6 +35114,10 @@ MonoBehaviour:
   _curHp: 0
   _attackPower: 20
   _defensePower: 3
+  player: {fileID: 0}
+  playerComponent: {fileID: 0}
+  isMoving: 1
+  isAttacking: 0
   earthObject: {fileID: 1095334250881209528, guid: 3dd5e4bd497ea93418edb35340a5e80b, type: 3}
   slashHitBox: {fileID: 8446805287805732000}
   initHitBox: {fileID: 4952902428174188319}
@@ -35362,7 +35319,7 @@ SceneRoots:
   - {fileID: 1574181146}
   - {fileID: 1926726076}
   - {fileID: 1076821101}
-  - {fileID: 560492931}
+  - {fileID: 1223610611}
   - {fileID: 2089146385}
   - {fileID: 1862199240}
   - {fileID: 918279043}

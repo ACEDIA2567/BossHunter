@@ -4,10 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
-public class UIManager : Singleton<UIManager>
+public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
+
     public GameObject optionUI;
     public GameObject dieUI;
     public GameObject stageUI;
@@ -33,15 +34,28 @@ public class UIManager : Singleton<UIManager>
     private float sec = 0;
     private int min = 0;
 
-    protected override void Awake()
+    [Header("Button")]
+    public Button clearReStart;
+    public Button clearExit;
+    public Button overReStart;
+    public Button overExit;
+
+
+    protected  void Awake()
     {
-        base.Awake();
+        if (Instance != null) return;
+        else
+        {
+            Instance = this;
+        }
+
         if (!PlayerPrefs.HasKey("secTime"))
         {
             PlayerPrefs.SetFloat("secTime", 50);
             PlayerPrefs.SetInt("minTime", 0);
         }
         SoundUISetting();
+        ButtonUISetting();
     }
 
     private void Update()
@@ -113,6 +127,7 @@ public class UIManager : Singleton<UIManager>
     public void StartStage()
     {
         stageTimer.gameObject.SetActive(true);
+        bossHP.transform.parent.gameObject.SetActive(true);
         startCheck = true;
         // 보스 UI 생성/활성화
     }
@@ -128,5 +143,13 @@ public class UIManager : Singleton<UIManager>
         masterToggle.onValueChanged.AddListener(SoundManager.Instance.MasterVolumMute);
         bgmToggle.onValueChanged.AddListener(SoundManager.Instance.BGMVolumMute);
         sfxToggle.onValueChanged.AddListener(SoundManager.Instance.SFXVolumMute);
+    }
+
+    public void ButtonUISetting()
+    {
+        clearReStart.onClick.AddListener(GameManager.Instance.InGameScene);
+        clearExit.onClick.AddListener(GameManager.Instance.GameExit);
+        overReStart.onClick.AddListener(GameManager.Instance.InGameScene);
+        overExit.onClick.AddListener(GameManager.Instance.GameExit);
     }
 }
