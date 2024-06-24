@@ -14,9 +14,14 @@ public class UIManager : Singleton<UIManager>
     public TextMeshProUGUI stageTimer;
     public TextMeshProUGUI currentStageTime;
     public TextMeshProUGUI bestClearTime;
-    public Slider maxSlider;
+
+    [Header("SoundUI")]
+    public Slider masterSlider;
     public Slider bgmSlider;
     public Slider sfxSlider;
+    public Toggle masterToggle;
+    public Toggle bgmToggle;
+    public Toggle sfxToggle;
     private bool startCheck = false;
     private float sec = 0;
     private int min = 0;
@@ -29,7 +34,7 @@ public class UIManager : Singleton<UIManager>
             PlayerPrefs.SetFloat("secTime", 50);
             PlayerPrefs.SetInt("minTime", 0);
         }
-        sliderSetting();
+        SoundUISetting();
     }
 
     private void Update()
@@ -104,10 +109,13 @@ public class UIManager : Singleton<UIManager>
         startCheck = true;
     }
 
-    public void sliderSetting()
+    public void SoundUISetting()
     {
-        maxSlider.onValueChanged.AddListener(SoundManager.Instance.SetMasterVolum);
+        masterSlider.onValueChanged.AddListener(SoundManager.Instance.SetMasterVolum);
         bgmSlider.onValueChanged.AddListener(SoundManager.Instance.SetBGMVolume);
         sfxSlider.onValueChanged.AddListener(SoundManager.Instance.SetSFXVolume);
+        masterToggle.onValueChanged.AddListener(SoundManager.Instance.MasterVolumMute);
+        bgmToggle.onValueChanged.AddListener(SoundManager.Instance.BGMVolumMute);
+        sfxToggle.onValueChanged.AddListener(SoundManager.Instance.SFXVolumMute);
     }
 }

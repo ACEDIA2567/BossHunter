@@ -918,19 +918,7 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: MasterVolumMute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 131328550}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_IsOn: 0
 --- !u!1 &141335454
 GameObject:
@@ -26038,9 +26026,12 @@ MonoBehaviour:
   stageTimer: {fileID: 790243091}
   currentStageTime: {fileID: 1583454664}
   bestClearTime: {fileID: 2100303290}
-  maxSlider: {fileID: 1985184148}
+  masterSlider: {fileID: 1985184148}
   bgmSlider: {fileID: 618604363}
   sfxSlider: {fileID: 105752548}
+  masterToggle: {fileID: 131328550}
+  bgmToggle: {fileID: 1323351064}
+  sfxToggle: {fileID: 532177641}
 --- !u!4 &1574181146
 Transform:
   m_ObjectHideFlags: 0
