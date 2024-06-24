@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] float m_speed = 4.0f;
     [SerializeField] float m_jumpForce = 7.5f;
     [SerializeField] float m_rollForce = 6.0f;
+    [SerializeField] float rollMultiplier = 1.5f;
     [SerializeField] bool m_noBlood = false;
     
     private Animator m_animator;
@@ -224,8 +225,9 @@ public class Player : MonoBehaviour
         else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding)
         {
             m_rolling = true;
+            m_rollCurrentTime = 0.0f;
             m_animator.SetTrigger("Roll");
-            m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
+            m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce * rollMultiplier, m_body2d.velocity.y);
         }
 
 
@@ -267,5 +269,10 @@ public class Player : MonoBehaviour
     {
         m_animator.SetBool("noBlood", m_noBlood);
         m_animator.SetTrigger("Death");
+    }
+
+    public bool IsPlayerRolling()
+    {
+        return m_rolling;
     }
 }
