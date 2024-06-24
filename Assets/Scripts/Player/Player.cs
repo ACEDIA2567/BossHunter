@@ -1,15 +1,15 @@
 using UnityEngine;
-using System.Collections;
 using TMPro;
 
 public class Player : MonoBehaviour
 {
-
+    [Header("Physical value")]
     [SerializeField] float m_speed = 4.0f;
     [SerializeField] float m_jumpForce = 7.5f;
     [SerializeField] float m_rollForce = 6.0f;
     [SerializeField] float rollMultiplier = 1.5f;
-    [SerializeField] bool m_noBlood = false;
+
+    private bool m_noBlood = false;
     
     private Animator m_animator;
     private Rigidbody2D m_body2d;
@@ -39,14 +39,30 @@ public class Player : MonoBehaviour
     private float m_rollDuration = 8.0f / 14.0f;
     private float m_rollCurrentTime;
 
+    // HP Stat
+    [Header("HP")]
     public float hp = 100.0f;
     private bool isDead = false;
 
+    // Sp Stat
+    [Header("Sp")]
+    public float sp = 100.0f;
+    [SerializeField] private float spRecover = 2.0f;
+    [SerializeField] private float attackCost = 1.0f;
+    [SerializeField] private float blockCostPerTime = 5.0f;
+    [SerializeField] private float spLimitCost = 10.0f;
+    [SerializeField] private float rollCost = 20.0f;
+
     // SH Task
+    [Header("Stat")]
     public float m_attackPower = 3000.0f;
     public bool isBlock = false;
     public float m_blockKeepTime;
+
+    // TestScene UI
+    [Header("TestScene UI")]
     [SerializeField] private TextMeshProUGUI curHpText;
+    [SerializeField] private TextMeshProUGUI curSpText;
 
     // Use this for initialization
     void Start()
@@ -117,6 +133,16 @@ public class Player : MonoBehaviour
             //////////////////////////////
         }
 
+        // Check player Sp
+        sp += spRecover * Time.deltaTime;
+        if (isBlock)
+        {
+            sp -= blockCostPerTime * Time.deltaTime;
+        }
+        if (sp > 100.0f)
+        {
+            sp = 100.0f;
+        }
 
         // -- Handle input and movement --
         float inputX = Input.GetAxis("Horizontal");
@@ -128,8 +154,10 @@ public class Player : MonoBehaviour
         // -- Handle Animations --
         if (!isDead) HandleAnimation(inputX);
 
-        // �ӽ�
-        curHpText.text = hp.ToString("N0");
+        // TestScene UI update
+        curHpText.text = "HP : " + hp.ToString("N0");
+        curSpText.text = "SP : " + sp.ToString("N0");
+
         if (isBlock)
         {
             m_blockKeepTime += Time.deltaTime;
@@ -166,27 +194,16 @@ public class Player : MonoBehaviour
 
     private void HandleAnimation(float inputX)
     {
-        /*
-        //Death
-        if (Input.GetKeyDown("e") && !m_rolling)
-        {
-            m_animator.SetBool("noBlood", m_noBlood);
-            m_animator.SetTrigger("Death");
-        }
-
-        //Hurt
-        else if (Input.GetKeyDown("q") && !m_rolling)
-            m_animator.SetTrigger("Hurt");
-        */
-
         //Attack
-        if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
+        if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling && sp >= attackCost)
         {
             weaponHitBoxCollider.enabled = true;
 
             blockHitBoxCollider.enabled = false;
 
             m_animator.SetBool("IdleBlock", false);
+
+            sp -= attackCost;
 
             m_currentAttack++;
 
@@ -206,7 +223,7 @@ public class Player : MonoBehaviour
         }
 
         // Block
-        else if (Input.GetMouseButtonDown(1) && !m_rolling)
+        else if (Input.GetMouseButtonDown(1) && !m_rolling && sp >= spLimitCost)
         {
             blockHitBoxCollider.enabled = true;
             isBlock = true;
@@ -214,7 +231,7 @@ public class Player : MonoBehaviour
             m_animator.SetBool("IdleBlock", true);
         }
 
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetMouseButtonUp(1) || sp < spLimitCost)
         {
             blockHitBoxCollider.enabled = false;
             isBlock = false;
@@ -222,11 +239,12 @@ public class Player : MonoBehaviour
         }
 
         // Roll
-        else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding)
+        else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding && sp >= rollCost)
         {
             m_rolling = true;
             m_rollCurrentTime = 0.0f;
             m_animator.SetTrigger("Roll");
+            sp -= rollCost;
             m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce * rollMultiplier, m_body2d.velocity.y);
         }
 
