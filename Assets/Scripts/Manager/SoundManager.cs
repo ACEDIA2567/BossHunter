@@ -7,13 +7,16 @@ using UnityEngine.UI;
 
 public enum SFXClip
 {
-    Attack,
-    Die,
+    Attack1,
+    Attack2,
+    parrying,
+    Die
 }
 
 public enum BGMClip
 {
-    Start,
+    Intro,
+    InGame,
     Fight,
     End
 }
@@ -23,7 +26,6 @@ public class SoundManager : Singleton<SoundManager>
     public AudioMixer mixer;
 
     public AudioClip[] clipBGM;
-    private AudioSource sourceMaster;
     private AudioSource sourceSFX;
     private AudioSource sourceBGM;
 
@@ -31,7 +33,6 @@ public class SoundManager : Singleton<SoundManager>
     {
         base.Awake();
         AudioInit();
-        sourceMaster = GetComponent<AudioSource>();
     }
 
     private void AudioInit()
