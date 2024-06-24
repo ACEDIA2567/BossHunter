@@ -32,11 +32,13 @@ public class GameManager : Singleton<GameManager>
     public void PlayerDie()
     {
         UIManager.Instance.PlayerDie();
+        SoundManager.Instance.PlaySound(SoundManager.Instance.clipBGM[(int)BGMClip.End]);
     }
 
     public void PlayerWin()
     {
         UIManager.Instance.StageClear();
+        SoundManager.Instance.PlaySound(SoundManager.Instance.clipBGM[(int)BGMClip.End]);
     }
 
     public void FightStart()
