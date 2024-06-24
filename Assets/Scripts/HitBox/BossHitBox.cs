@@ -25,7 +25,7 @@ public class BossHitBox : MonoBehaviour
         if (collision.CompareTag(targetTag))
         {
             Player player = collision.GetComponent<Player>();
-            RadeManager.Instance.DamageToPlayer(0.7f, player.isBlock);
+            RadeManager.Instance.DamageToPlayer(0.4f, player.isBlock);
         }
     }
 }
