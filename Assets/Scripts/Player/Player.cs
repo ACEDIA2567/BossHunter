@@ -283,6 +283,7 @@ public class Player : MonoBehaviour
     {
         m_animator.SetBool("noBlood", m_noBlood);
         m_animator.SetTrigger("Death");
+        GameManager.Instance.PlayerDie();
     }
 
     public bool IsPlayerRolling()

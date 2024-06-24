@@ -8,8 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    public GameObject monster;
-    public Minotaur minotaur;
     public GameObject player;
 
     public void IntroScene()
@@ -47,9 +45,8 @@ public class GameManager : Singleton<GameManager>
     public void FightStart()
     {
         // 몬스터 생성
-        monster = GameObject.Find("Minotaur").gameObject;
-        monster.SetActive(true);
-        minotaur = monster.GetComponent<Minotaur>();
+        RadeManager.Instance.minotaur.gameObject.transform.position = GameObject.Find("MonsterSpawnPos").transform.position;
+        RadeManager.Instance.minotaur.gameObject.SetActive(true);
         // 카메라로 몬스터 보여주기
         CameraManager.Instance.SpawnCamera();
         // 그 후 다시 플레이어 위치로 이동

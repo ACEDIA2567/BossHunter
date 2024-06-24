@@ -52,9 +52,10 @@ public class Minotaur : Monster
 
     private void Update()
     {
+        float distance = Vector3.Distance(transform.position, player.transform.position);
         if (!isInitDone)
         {
-            float distance = Vector3.Distance(transform.position, player.transform.position);
+            
             if (distance <= 10f)
             {
                 InitReady();
@@ -71,7 +72,7 @@ public class Minotaur : Monster
             DestroyArmor();
         }
 
-        if (!isAttacking)
+        if (!isAttacking && distance >= 0)
         {
             Search();
         }
@@ -357,5 +358,6 @@ public class Minotaur : Monster
     {
         animator.SetBool("isDeath", true);
         isAttacking = true;
+        GameManager.Instance.PlayerWin();
     }
 }

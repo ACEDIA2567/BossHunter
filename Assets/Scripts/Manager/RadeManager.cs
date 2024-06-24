@@ -11,7 +11,6 @@ public class RadeManager : Singleton<RadeManager>
     protected override void Awake()
     {
         base.Awake();
-        minotaur = GameManager.Instance.minotaur;
         player = GameManager.Instance.player.GetComponent<Player>();
     }
 
