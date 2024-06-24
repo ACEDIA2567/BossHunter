@@ -59,11 +59,6 @@ public class Player : MonoBehaviour
     public bool isBlock = false;
     public float m_blockKeepTime;
 
-    // TestScene UI
-    [Header("TestScene UI")]
-    [SerializeField] private TextMeshProUGUI curHpText;
-    [SerializeField] private TextMeshProUGUI curSpText;
-
     // Use this for initialization
     void Start()
     {
@@ -153,10 +148,6 @@ public class Player : MonoBehaviour
 
         // -- Handle Animations --
         if (!isDead) HandleAnimation(inputX);
-
-        // TestScene UI update
-        curHpText.text = "HP : " + hp.ToString("N0");
-        curSpText.text = "SP : " + sp.ToString("N0");
 
         if (isBlock)
         {
