@@ -39,7 +39,9 @@ public class UIManager : MonoBehaviour
     public Button clearExit;
     public Button overReStart;
     public Button overExit;
-
+    public Button optionReStart;
+    public Button optionExit;
+    public Button cancelButton;
 
     protected  void Awake()
     {
@@ -151,5 +153,8 @@ public class UIManager : MonoBehaviour
         clearExit.onClick.AddListener(GameManager.Instance.GameExit);
         overReStart.onClick.AddListener(GameManager.Instance.InGameScene);
         overExit.onClick.AddListener(GameManager.Instance.GameExit);
+        optionReStart.onClick.AddListener(GameManager.Instance.InGameScene);
+        optionExit.onClick.AddListener(GameManager.Instance.GameExit);
+        cancelButton.onClick.AddListener(GameManager.Instance.GameTime);
     }
 }

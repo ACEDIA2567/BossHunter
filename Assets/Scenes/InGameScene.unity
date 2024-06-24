@@ -32327,6 +32327,9 @@ MonoBehaviour:
   clearExit: {fileID: 1111843383}
   overReStart: {fileID: 821454745}
   overExit: {fileID: 258637591}
+  optionReStart: {fileID: 24911399}
+  optionExit: {fileID: 1251984095}
+  cancelButton: {fileID: 1180647993}
 --- !u!4 &1574181146
 Transform:
   m_ObjectHideFlags: 0

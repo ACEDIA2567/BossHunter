@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,6 +23,10 @@ public class GameManager : Singleton<GameManager>
         SoundManager.Instance.PlaySound(SoundManager.Instance.clipBGM[(int)BGMClip.InGame]);
     }
 
+    public void GameTime()
+    {
+        Time.timeScale = 1.0f;
+    }
 
     public void GameExit()
     {
