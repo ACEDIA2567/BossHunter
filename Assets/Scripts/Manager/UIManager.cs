@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -11,6 +14,21 @@ public class UIManager : Singleton<UIManager>
     public TextMeshProUGUI stageTimer;
     public TextMeshProUGUI currentStageTime;
     public TextMeshProUGUI bestClearTime;
+
+    [Header("Bar")]
+    public Image playerHP;
+    public Image playerSP;
+    public Image bossHP;
+
+    [Header("SoundUI")]
+    public Slider masterSlider;
+    public Slider bgmSlider;
+    public Slider sfxSlider;
+    public Toggle masterToggle;
+    public Toggle bgmToggle;
+    public Toggle sfxToggle;
+
+    [Header("FightStart")]
     private bool startCheck = false;
     private float sec = 0;
     private int min = 0;
@@ -23,6 +41,7 @@ public class UIManager : Singleton<UIManager>
             PlayerPrefs.SetFloat("secTime", 50);
             PlayerPrefs.SetInt("minTime", 0);
         }
+        SoundUISetting();
     }
 
     private void Update()
@@ -95,5 +114,19 @@ public class UIManager : Singleton<UIManager>
     {
         stageTimer.gameObject.SetActive(true);
         startCheck = true;
+        // 보스 UI 생성/활성화
+    }
+
+    public void SoundUISetting()
+    {
+        // 슬라이더 정보
+        masterSlider.onValueChanged.AddListener(SoundManager.Instance.SetMasterVolum);
+        bgmSlider.onValueChanged.AddListener(SoundManager.Instance.SetBGMVolume);
+        sfxSlider.onValueChanged.AddListener(SoundManager.Instance.SetSFXVolume);
+        
+        // 토글 정보
+        masterToggle.onValueChanged.AddListener(SoundManager.Instance.MasterVolumMute);
+        bgmToggle.onValueChanged.AddListener(SoundManager.Instance.BGMVolumMute);
+        sfxToggle.onValueChanged.AddListener(SoundManager.Instance.SFXVolumMute);
     }
 }

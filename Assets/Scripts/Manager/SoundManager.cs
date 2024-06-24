@@ -7,13 +7,16 @@ using UnityEngine.UI;
 
 public enum SFXClip
 {
-    Attack,
-    Die,
+    Attack1,
+    Attack2,
+    parrying,
+    Die
 }
 
 public enum BGMClip
 {
-    Start,
+    Intro,
+    InGame,
     Fight,
     End
 }
@@ -23,7 +26,6 @@ public class SoundManager : Singleton<SoundManager>
     public AudioMixer mixer;
 
     public AudioClip[] clipBGM;
-    private AudioSource sourceMaster;
     private AudioSource sourceSFX;
     private AudioSource sourceBGM;
 
@@ -31,7 +33,6 @@ public class SoundManager : Singleton<SoundManager>
     {
         base.Awake();
         AudioInit();
-        sourceMaster = GetComponent<AudioSource>();
     }
 
     private void AudioInit()
@@ -48,25 +49,19 @@ public class SoundManager : Singleton<SoundManager>
         mixer.SetFloat("MusicVol" ,Mathf.Log10(sliderValue) * 20);
     }
 
-    public void MasterVolumMute(Toggle toggle)
+    public void MasterVolumMute(bool toggle)
     {
-        sourceMaster.mute = toggle.isOn;
-        foreach (AudioSource source in transform.GetComponentsInChildren<AudioSource>())
-        {
-            source.mute = toggle.isOn;
-        }
+        AudioListener.volume = toggle ? 0 : 1;
     }
 
-    public void BGMVolumMute(Toggle toggle)
+    public void BGMVolumMute(bool toggle)
     {
-        if (sourceMaster.mute) return;
-        sourceBGM.mute = toggle.isOn;
+        sourceBGM.mute = toggle;
     }
 
-    public void SFXVolumMute(Toggle toggle)
+    public void SFXVolumMute(bool toggle)
     {
-        if (sourceMaster.mute) return;
-        sourceSFX.mute = toggle.isOn;
+        sourceSFX.mute = toggle;
     }
 
     public void SetBGMVolume(float sliderValue)
