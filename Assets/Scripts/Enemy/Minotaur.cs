@@ -5,11 +5,11 @@ using TMPro;
 using UnityEngine;
 public class Minotaur : Monster
 {
-    private float _maxHp = 200000f;
-    public float _curHp;
-    public float _attackPower = 20f;
-    public float _defensePower = 3f;
-    private float _speed = 2f;
+    private float minoMaxHp = 200000f;
+    public float minoCurHp;
+    public float minoAttackPower = 20f;
+    public float minoDefensePower = 3f;
+    private float minoSpeed = 2f;
     private float attackCoolDown = 3f;
     private float coolDown;
     public GameObject player;
@@ -29,11 +29,11 @@ public class Minotaur : Monster
     [SerializeField] private TextMeshProUGUI curHpText;
     private void Start()
     {
-        maxHp = _maxHp;
-        _curHp = maxHp;
-        attackPower = _attackPower;
-        defensePower = _defensePower;
-        speed = _speed;
+        maxHp = minoMaxHp;
+        minoCurHp = maxHp;
+        attackPower = minoAttackPower;
+        defensePower = minoDefensePower;
+        speed = minoSpeed;
         currentHp = maxHp;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -50,7 +50,7 @@ public class Minotaur : Monster
                 InitReady();
             }
         }
-        if ((_curHp / maxHp) < 0.4f && !isBigSlashDone)
+        if ((minoCurHp / maxHp) < 0.4f && !isBigSlashDone)
         {
             BigReady();
         }
@@ -73,7 +73,7 @@ public class Minotaur : Monster
             isAttacking = false;
             isMoving = false;
         }
-        if (_curHp <= 0)
+        if (minoCurHp <= 0)
         {
             Death();
         }
@@ -152,7 +152,7 @@ public class Minotaur : Monster
     }
     private void RepairArmorEnd()
     {
-        defensePower = _defensePower;
+        defensePower = minoDefensePower;
         animator.SetBool("isRepairArmor", false);
         isAttacking = false;
     }

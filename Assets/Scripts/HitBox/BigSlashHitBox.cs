@@ -7,14 +7,14 @@ public class BigSlashHitBox : MonoBehaviour
     public string targetTag = "Player";
     private float existTime;
     public bool flipX;
-    GameObject _player;
+    GameObject player;
     SpriteRenderer spriteRenderer;
 
     private void Start()
     {
         targetTag = "Player";
         existTime = 0;
-        _player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void Update()
@@ -29,7 +29,7 @@ public class BigSlashHitBox : MonoBehaviour
 
     private void SpriteFlip()
     {
-        if (_player.transform.position.x > transform.position.x)
+        if (player.transform.position.x > transform.position.x)
         {
             spriteRenderer.flipX = flipX ? true : false; // 방향 반전을 고려한 스프라이트 플립
         }
@@ -43,7 +43,7 @@ public class BigSlashHitBox : MonoBehaviour
     {
         SpriteFlip();
 
-        Vector3 direction = (_player.transform.position - transform.position).normalized;
+        Vector3 direction = (player.transform.position - transform.position).normalized;
         if (flipX)
         {
             direction = -direction; // 방향 반전 적용
