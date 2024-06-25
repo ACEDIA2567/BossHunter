@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AudioClips : MonoBehaviour
 {
+    // 객체마다 사용할 클립모음
     public AudioClip[] clips;
 
     public void PlayBGM(SFXClip clip)

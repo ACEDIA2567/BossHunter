@@ -30,7 +30,7 @@ public class RadeManager : MonoBehaviour
         {
             damage *= 2;
         }
-        minotaur._curHp -= damage;
+        minotaur.minoCurHp -= damage;
         BossHPUpdate();
 
         // particle
@@ -45,7 +45,7 @@ public class RadeManager : MonoBehaviour
     public void ReflectAttackToBoss()
     {
         float damage = 10000;
-        minotaur._curHp -= damage;
+        minotaur.minoCurHp -= damage;
         minotaur.defensePower -= 1;
         BossHPUpdate();
     }
@@ -96,6 +96,6 @@ public class RadeManager : MonoBehaviour
 
     private void BossHPUpdate()
     {
-        UIManager.Instance.bossHP.fillAmount = minotaur._curHp / minotaur.maxHp;
+        UIManager.Instance.bossHP.fillAmount = minotaur.minoCurHp / minotaur.maxHp;
     }
 }

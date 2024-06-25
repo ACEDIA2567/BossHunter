@@ -10,6 +10,7 @@ public class StartTriggerPos : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             GameManager.Instance.FightStart();
+            // 반복 실행으로 삭제처리함(비활성화해도 됨)
             Destroy(gameObject);
         }
     }

@@ -99,6 +99,7 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    // 스테이지 클리어 시간 저장 및 기록 갱신
     public void StageClear()
     {
         stageUI.SetActive(true);
@@ -129,11 +130,14 @@ public class UIManager : MonoBehaviour
     public void StartStage()
     {
         stageTimer.gameObject.SetActive(true);
+        // 보스 UI 생성/활성화
         bossHP.transform.parent.gameObject.SetActive(true);
         startCheck = true;
-        // 보스 UI 생성/활성화
     }
 
+    // 슬라이더 UI정보를 등록
+    // 너무 무분별하므로 다음 프로젝트에서는 UI정보를 Dontdestroyload를
+    // 이용하여 같이 이동하여 비/활성화시켜서 이용해야겠음
     public void SoundUISetting()
     {
         // 슬라이더 정보
@@ -147,6 +151,9 @@ public class UIManager : MonoBehaviour
         sfxToggle.onValueChanged.AddListener(SoundManager.Instance.SFXVolumMute);
     }
 
+    // 버튼 UI정보를 등록
+    // 너무 무분별하므로 다음 프로젝트에서는 UI정보를 Dontdestroyload를
+    // 이용하여 같이 이동하여 비/활성화시켜서 이용해야겠음
     public void ButtonUISetting()
     {
         clearReStart.onClick.AddListener(GameManager.Instance.InGameScene);

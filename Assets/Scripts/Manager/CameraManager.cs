@@ -35,6 +35,7 @@ public class CameraManager : MonoBehaviour
         vCam2 = camera2.GetComponent<CinemachineVirtualCameraBase>();
     }
 
+    // 스폰 시 시네머신의 카메라의 자식으로 이동하여 움직이게 함
     public void SpawnCamera()
     {
         camera1.transform.SetParent(this.transform);
