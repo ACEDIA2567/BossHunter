@@ -47,6 +47,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.StartStage();
     }
 
+    // 게임승리 시 실행 됨
     public IEnumerator PlayerWin()
     {
         yield return new WaitForSeconds(2.0f);
@@ -54,6 +55,7 @@ public class GameManager : Singleton<GameManager>
         SoundManager.Instance.PlaySound(SoundManager.Instance.clipBGM[(int)BGMClip.End]);
     }
 
+    // 게임패배 시 실행 됨
     public IEnumerator PlayerDie()
     {
         yield return new WaitForSeconds(2.0f);
